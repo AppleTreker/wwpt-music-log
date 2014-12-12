@@ -1,0 +1,36 @@
+<% @songs.each do |s| %>
+    <tr data-id="<%= s.id %>" class="item ">
+      <% scale_factor = (s.time.to_i - @search_time.to_i).abs.to_f.scale_between(0, 3600, 1.0, 0.0) %>
+      <td rowspan="1" class="time" <%= @search_time ? "style=\"background-color: rgba(255,255,0,#{scale_factor})\"" : '' %>><%= s.time.to_time.getlocal.strftime("%m/%e %l:%M %p") %></td>
+      <td>
+        <img width="40" src="<%= s.image.empty? ? "/img/no-art.jpg" : s.image %>">
+      </td>
+      <td><%= s.title %></td>
+      <td><%= s.artist.length>54 ? s.artist[0..50] + '...' : s.artist %></td>
+      <td><%= s.album.length>54 ? s.album[0..50] + '...' : s.album %></td>
+      <td><%= s.genre %></td>
+    </tr>
+    <tr hidden class="info" id="<%= s.id %>">
+      <td colspan="6">
+        <div class="row">
+          <div class="col-sm-2" style="width: 130px;">
+            <img class="img img-responsive" src="<%= s.image.empty? ? "/img/no-art.jpg" : s.image %>">
+          </div>
+          <div class="col-sm-8">
+            <h3 class="small-top"><%= s.title %>
+              <small>— <%= s.artist %></small>
+            </h3>
+            <%= "<h4><strong>Composer:</strong> #{s.composer}" unless s.composer.empty? %>
+            <h4><%= s.album %><%= " — #{s.year}" if s.year %><%= ", #{s.genre}" unless s.genre.empty? %> </h4>
+
+            <h6><%= Time.at(s.length).strftime("%M:%S") %>, played <%= s.playCount %> times through this machine</h6> <!-- maybe -->
+            <% if s.urlApple!='' %>
+                </div>
+                <div class="col-md-1">
+                  <a href="<%= s.urlApple %>" target="itunes_store" style="margin-top:30px;display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>
+            <% end %>
+            </div>
+            </div>
+      </td>
+    </tr>
+<% end %>

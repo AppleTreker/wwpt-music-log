@@ -1,0 +1,70 @@
+<div class="not-container">
+  <h1>Welcome</h1>
+
+  <div class="well">
+    <legend>Looking for something that was on air?</legend>
+
+    <div class="row">
+      <div class="col-xs-8">
+        <form class="form-inline" role="form" action="/search" method="post">
+          <div class="form-group">
+            <label class="sr-only" for="dayInput">Day</label>
+            <select class="form-control" id="dayInput" name="day">
+              <%
+                 first_day = Time.at(Songs.first.time).to_i/86400
+                 first_day = Time.local(2014, 'mar', 18).to_i/86400
+                 last_day = Time.at(Songs.last.time).to_i/86400
+                 (first_day..last_day).each do |i|
+              %>
+                  <option <%= 'selected' if i==last_day %> value="<%= Time.at(i*86400).getutc.strftime("%Y:%b:%d") %>"><%= Time.at(i*86400).getutc.strftime("%A %b %e") %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="timeInput">Time</label>
+
+            <div class="input-group" style="width: 90px">
+              <input type="text" maxlength="2" id="timeInput" class="form-control" name="time">
+              <span class="input-group-addon">:00</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="btn-group">
+              <button type="submit" name="AM" value="true" class="btn btn-success">AM</button>
+              <button type="submit" name="PM" value="true" class="btn btn-success">PM</button>
+              <button disabled type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+          <input type="hidden" readonly name="range" value="1">
+        </form>
+
+      </div>
+
+      <div class="col-xs-4">
+        <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">List &amp; Search All Songs</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">List &amp; Search All Songs</h4>
+        </div>
+        <div class="modal-body">
+          This feature is not optimized. If you continue, the next page could take a very long time to load. The primary
+          reason one might want to use this feature is if one would like to search for songs with certain attributes.
+          Because there are so many entries, searching within the page may also be taxing to your computer, as the
+          search mechanism was not designed to handle the thousands of entries that this page contains.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <a href="/all" type="button" class="btn btn-primary">Okay, take me there.</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= partial(:table, :locals => {:now => true}) %>
+</div>

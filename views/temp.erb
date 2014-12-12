@@ -1,0 +1,33 @@
+<% @songs.each do |s| %>
+    <tr data-id="<%= s.id %>" class="item">
+      <td rowspan="1" class="time"><%= s.time.to_time.getlocal.strftime("%m/%e %l:%M %p") %></td>
+      <td>
+        <img width="40" src="<%= s.image!='' ? s.image : "http://musicunderfire.com/wp-content/uploads/2012/06/No-album-art-itunes-300x300.jpg" %>">
+      </td>
+      <td><%= s.title %></td>
+      <td><%= s.artist.length>54 ? s.artist[0..50] + '...' : s.artist %></td>
+      <td><%= s.album.length>54 ? s.album[0..50] + '...' : s.album %></td>
+      <td><%= s.genre %></td>
+    </tr>
+    <tr hidden class="info" id="<%= s.id %>">
+      <td colspan="6">
+        <div class="row">
+          <div class="col-md-2">
+            <img class="img img-responsive" src="<%= s.image.empty? ? "http://musicunderfire.com/wp-content/uploads/2012/06/No-album-art-itunes-300x300.jpg" : s.image %>">
+          </div>
+          <div class="col-md-10">
+            <h3><%= s.title %>
+              <small>— <%= s.artist %></small>
+            </h3>
+            <%= "<h4><strong>Composer:</strong> #{s.composer}" unless s.composer.empty? %>
+            <h4><%= s.album %><%= " — #{s.year}" if s.year %><%= ", #{s.genre}" unless s.genre.empty? %> </h4>
+
+            <h6><%= Time.at(s.length).strftime("%M:%S") %>, played <%= s.playCount %> times through this machine</h6>
+            <% if s.urlApple!='' %>
+                <a href="<%= s.urlApple %>" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>
+            <% end %>
+          </div>
+        </div>
+      </td>
+    </tr>
+<% end %>

@@ -1,0 +1,44 @@
+<table id="myTable" class="table table-bordered <%= now ? 'infinite' : 'table-striped tablesorter-bootstrap tablesorter' %>">
+  <thead id="loadTime" data-time="<%= Time.now.to_i %>">
+  <tr>
+    <td class="filter-false" style="width: 80px">Time</td>
+    <td style="width: 40px" class="sorter-false filter-false"></td>
+    <td>Title</td>
+    <td>Artist</td>
+    <td>Album</td>
+    <td>Genre</td>
+  </tr>
+  </thead>
+  <tbody class="expand" id="table_body">
+
+  <% if now %>
+      <% _song = @now_song %>
+      <tr class="top" id="<%= _song.id %>">
+        <td rowspan="1" class="time"><%= Time.at(_song.time).getlocal.strftime("%m/%e %l:%M&nbsp;%p") %></td>
+        <td colspan="6">
+          <h2>Now Playing: </h2>
+
+          <div class="row">
+            <div class="col-sm-2" style="width: 130px;">
+              <img class="img img-responsive" src="<%= _song.image.empty? ? "//localhost/~alex/now_playing/now_playing-#{_song.artworkID}.jpg" : _song.image %>">
+            </div>
+            <div class="col-sm-10">
+              <h3><%= _song.title %>
+                <small>— <%= _song.artist %></small>
+              </h3>
+              <%= "<h4><strong>Composer:</strong> #{_song.composer}" unless _song.composer.empty? %>
+              <h4><%= _song.album %><%= " — #{_song.year}" if _song.year %><%= ", #{_song.genre}" unless _song.genre.empty? %> </h4>
+
+              <h6><%= Time.at(_song.length).strftime("%M:%S") %>, played <%= _song.playCount %> times through this
+                machine</h6> <!-- Maybe -->
+              <a href="<%= _song.urlApple %>" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>
+            </div>
+          </div>
+        </td>
+      </tr>
+  <% end %>
+
+  <%= partial :rows %>
+
+  </tbody>
+</table>
