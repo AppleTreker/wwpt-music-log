@@ -5,7 +5,6 @@ class Songs
 
 	property :id, Serial, :key => true
 	property :time, EpochTime
-	property :player, String, :required => true
 
 	property :title, Text, :required => true
 	property :artist, Text, :required => true

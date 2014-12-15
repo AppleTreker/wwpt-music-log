@@ -29,19 +29,20 @@ class Template < Sinatra::Base
 		erb :rows, :layout => false
 	end
 
-	post '/log/:player' do
-		puts params.inspect
+	post '/log/:secret' do
+		halt 401 unless ENV['LOG_SECRET'] == params[:secret]
+		halt 403 unless ENV['LOG_IP'] == request.ip
+
 		entry            = Songs.new
 		entry.attributes = params.slice('title', 'artist', 'album', 'genre', 'year', 'playCount', 'composer', 'urlAmazon', 'urlApple', 'image', 'artworkID')
 		entry.length     = params[:time]
 		entry.time       = Time.now
-		entry.player     = params[:player]
 
 		if entry.image.empty? && entry.urlApple
 			aid      = params[:urlApple].slice(/id\d*\?/)[2..-2]
 			uri      = URI("https://itunes.apple.com/lookup?id=#{aid}")
 			response = Net::HTTP.get(uri)
-			puts response
+			# puts response
 			json        = JSON.parse(response)
 			entry.image = json["results"][0]["artworkUrl100"]
 			unless entry.save
