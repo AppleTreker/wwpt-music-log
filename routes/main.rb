@@ -2,7 +2,7 @@ class Template < Sinatra::Base
 	get '/' do
 		@songs    = Songs.last(5, :offset => 1)
 		@now_song = Songs.last
-		#puts @songs.inspect
+		erb :no_songs if !@now_song
 		erb :home
 	end
 
@@ -49,5 +49,9 @@ class Template < Sinatra::Base
 				puts entry.errors.full_messages
 			end
 		end
+	end
+
+	get '/whatip' do
+		return request.ip.to_s
 	end
 end
