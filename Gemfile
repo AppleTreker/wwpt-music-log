@@ -15,5 +15,6 @@ end
 group :production do
 	gem 'pg'
 	gem 'dm-postgres-adapter'
-	gem 'passenger'
+	#gem 'passenger'
+	gem 'thin'
 end
