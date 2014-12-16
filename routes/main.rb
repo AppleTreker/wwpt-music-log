@@ -3,7 +3,7 @@ class Template < Sinatra::Base
 		@songs    = Songs.last(5, :offset => 1)
 		@now_song = Songs.last
 		erb :no_songs if !@now_song
-		erb :home
+		#erb :home
 	end
 
 	get '/all' do

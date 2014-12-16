@@ -11,13 +11,14 @@
             <label class="sr-only" for="dayInput">Day</label>
             <select class="form-control" id="dayInput" name="day">
               <%
+                 if @now_song
                  first_day = Time.at(Songs.first.time).to_i/86400
                  first_day = Time.local(2014, 'mar', 18).to_i/86400
                  last_day = Time.at(Songs.last.time).to_i/86400
                  (first_day..last_day).each do |i|
               %>
                   <option <%= 'selected' if i==last_day %> value="<%= Time.at(i*86400).getutc.strftime("%Y:%b:%d") %>"><%= Time.at(i*86400).getutc.strftime("%A %b %e") %></option>
-              <% end %>
+              <% end end %>
             </select>
           </div>
           <div class="form-group">
