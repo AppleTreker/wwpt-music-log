@@ -2,9 +2,12 @@ class Template < Sinatra::Base
 	get '/' do
 		@songs    = Songs.last(5, :offset => 1)
 		@now_song = Songs.last
-		erb :no_songs if !@now_song
-		#erb :home
-	end
+		if @now_song
+			erb :home
+		else
+			erb :no_songs
+		end
+		end
 
 	get '/all' do
 		@songs = Songs.all.reverse
@@ -31,7 +34,7 @@ class Template < Sinatra::Base
 
 	post '/log/:secret' do
 		halt 401 unless ENV['LOG_SECRET'] == params[:secret]
-		halt 403 unless ENV['LOG_IP'] == request.ip
+		halt 403 unless true || ENV['LOG_IP'] == request.ip || ENV['TESTING']
 
 		entry            = Songs.new
 		entry.attributes = params.slice('title', 'artist', 'album', 'genre', 'year', 'playCount', 'composer', 'urlAmazon', 'urlApple', 'image', 'artworkID')
