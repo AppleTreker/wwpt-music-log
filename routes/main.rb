@@ -7,7 +7,7 @@ class Template < Sinatra::Base
 		else
 			erb :no_songs
 		end
-		end
+	end
 
 	get '/all' do
 		@songs = Songs.all.reverse
@@ -42,7 +42,7 @@ class Template < Sinatra::Base
 		entry.time       = Time.now
 
 		if entry.image.empty? && entry.urlApple
-			aid      = params[:urlApple].slice(/id\d*\?/)[2..-2]
+			aid      = params[:urlApple].slice(/id\d*\?/)[2..-2] if params[:urlApple]
 			uri      = URI("https://itunes.apple.com/lookup?id=#{aid}")
 			response = Net::HTTP.get(uri)
 			# puts response
