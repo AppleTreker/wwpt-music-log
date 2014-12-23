@@ -41,7 +41,7 @@ class Template < Sinatra::Base
 		entry.length     = params[:time]
 		entry.time       = Time.now
 
-		if entry.image.empty? && entry.urlApple
+		if entry.image.empty? && entry.urlApple && false
 			aid      = params[:urlApple].slice(/id\d*\?/)
 			aid = aid[2..-2] if aid
 			uri      = URI("https://itunes.apple.com/lookup?id=#{aid}")
@@ -49,9 +49,9 @@ class Template < Sinatra::Base
 			# puts response
 			json        = JSON.parse(response)
 			entry.image = json["results"][0]["artworkUrl100"]
-			unless entry.save
-				puts entry.errors.full_messages
-			end
+		end
+		unless entry.save
+			puts entry.errors.full_messages
 		end
 	end
 
