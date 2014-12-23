@@ -42,7 +42,8 @@ class Template < Sinatra::Base
 		entry.time       = Time.now
 
 		if entry.image.empty? && entry.urlApple
-			aid      = params[:urlApple].slice(/id\d*\?/)[2..-2] if params[:urlApple]
+			aid      = params[:urlApple].slice(/id\d*\?/)
+			aid = aid[2..-2] if aid
 			uri      = URI("https://itunes.apple.com/lookup?id=#{aid}")
 			response = Net::HTTP.get(uri)
 			# puts response
