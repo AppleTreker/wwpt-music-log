@@ -1,6 +1,6 @@
 <div class="not-container">
   <h1>Welcome</h1>
-  <%= "<h1>Warning: Currently in testing mode" if ENV['TESTING'] %>
+  <%= "<h1>Warning: Currently in testing mode</h1>" if ENV['TESTING'] %>
 
   <div class="well">
     <legend>Looking for something that was on air?</legend>
@@ -14,7 +14,7 @@
               <%
                  if @now_song
                  first_day = Time.at(Songs.first.time).to_i/86400
-                 first_day = Time.local(2014, 'mar', 18).to_i/86400
+                 # first_day = Time.local(2014, 'mar', 18).to_i/86400
                  last_day = Time.at(Songs.last.time).to_i/86400
                  (first_day..last_day).each do |i|
               %>
@@ -31,10 +31,10 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="btn-group">
+            <div class="btn-group" data-toggle="tooltip" data-placement="bottom" title="To Search, indicate AM or PM">
+              <button disabled type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
               <button type="submit" name="AM" value="true" class="btn btn-success">AM</button>
               <button type="submit" name="PM" value="true" class="btn btn-success">PM</button>
-              <button disabled type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
           </div>
           <input type="hidden" readonly name="range" value="1">
@@ -70,3 +70,9 @@
   </div>
   <%= partial(:table, :locals => {:now => true}) %>
 </div>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>

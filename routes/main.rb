@@ -34,21 +34,21 @@ class Template < Sinatra::Base
 
 	post '/log/:secret' do
 		halt 401 unless ENV['LOG_SECRET'] == params[:secret]
-		halt 403 unless true || ENV['LOG_IP'] == request.ip || ENV['TESTING']
+		halt 403 unless ENV['LOG_IP'] == request.ip || ENV['TESTING']
 
 		entry            = Songs.new
 		entry.attributes = params.slice('title', 'artist', 'album', 'genre', 'year', 'playCount', 'composer', 'urlAmazon', 'urlApple', 'image', 'artworkID')
 		entry.length     = params[:time]
 		entry.time       = Time.now
 
-		if entry.image.empty? && entry.urlApple && false
+		if entry.urlApple && (!entry.image || entry.image.empty?)
 			aid      = params[:urlApple].slice(/id\d*\?/)
 			aid = aid[2..-2] if aid
 			uri      = URI("https://itunes.apple.com/lookup?id=#{aid}")
 			response = Net::HTTP.get(uri)
 			# puts response
 			json        = JSON.parse(response)
-			entry.image = json["results"][0]["artworkUrl100"]
+			entry.image = json["results"][0]["artworkUrl100"] if json["resultCount"] > 0
 		end
 		unless entry.save
 			puts entry.errors.full_messages

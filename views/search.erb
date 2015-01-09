@@ -30,19 +30,22 @@
       </div>
 
       <div class="form-group">
-        <div class="btn-group">
-          <button type="submit" name="AM" value="true" class="btn btn-success <%= 'active' if params[:AM] %>">AM</button>
-          <button type="submit" name="PM" value="true" class="btn btn-success <%= 'active' if params[:PM] %>">PM</button>
-          <button disabled type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
-      <div class="form-group">
         <label class="sr-only" for="timeInput">Search Range</label>
         <div class="input-group" style="width: 235px">
           <span class="input-group-addon">Search within</span>
           <input type="number" min=".5" step=".5" max="100" maxlength="2" id="timeInput" class="form-control" name="range" value="<%= params[:range] %>">
           <span class="input-group-addon">hours</span>
-        </div>      </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="btn-group">
+          <button disabled type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+          <button type="submit" name="AM" value="true" class="btn btn-success <%= 'active' if params[:AM] %>">AM</button>
+          <button type="submit" name="PM" value="true" class="btn btn-success <%= 'active' if params[:PM] %>">PM</button>
+        </div>
+      </div>
+
     </form>
   </div>
   <%= partial(:table, :locals => {:now => false}) %>
