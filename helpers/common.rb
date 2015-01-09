@@ -1,20 +1,20 @@
 class Hash
-	def slice(*keys)
-		keys.map! { |key| convert_key(key) } if respond_to?(:convert_key, true)
-		keys.each_with_object(self.class.new) { |k, hash| hash[k] = self[k] if has_key?(k) }
-	end
+  def slice(*keys)
+    keys.map! { |key| convert_key(key) } if respond_to?(:convert_key, true)
+    keys.each_with_object(self.class.new) { |k, hash| hash[k] = self[k] if has_key?(k) }
+  end
 end
 
 class Array
-	def extract_options!
-		last.is_a?(::Hash) ? pop : {}
-	end
+  def extract_options!
+    last.is_a?(::Hash) ? pop : {}
+  end
 end
 
 class Numeric
-	def scale_between(from_min, from_max, to_min, to_max)
-		((to_max - to_min) * (self - from_min)) / (from_max - from_min) + to_min
-	end
+  def scale_between(from_min, from_max, to_min, to_max)
+    ((to_max - to_min) * (self - from_min)) / (from_max - from_min) + to_min
+  end
 end
 
 class Template < Sinatra::Base
@@ -25,9 +25,9 @@ class Template < Sinatra::Base
       if collection = options.delete(:collection) then
         collection.inject([]) do |buffer, member|
           buffer << erb(template, options.merge(
-              :layout => false,
-              :locals => {template.to_sym => member}
-          )
+                                    :layout => false,
+                                    :locals => {template.to_sym => member}
+                                )
           )
         end.join("\n")
       else
@@ -50,16 +50,16 @@ class Template < Sinatra::Base
 
     def j(javascript)
       js_escape_map = {
-          '\\'    => '\\\\',
-          '</'    => '<\/',
-          "\r\n"  => '\n',
-          "\n"    => '\n',
-          "\r"    => '\n',
-          '"'     => '\\"',
-          "'"     => "\\'"
+          '\\'   => '\\\\',
+          '</'   => '<\/',
+          "\r\n" => '\n',
+          "\n"   => '\n',
+          "\r"   => '\n',
+          '"'    => '\\"',
+          "'"    => "\\'"
       }
       if javascript
-        javascript.gsub(/(\\|<\/|\r\n|\342\200\250|[\n\r"'])/u) {|match| js_escape_map[match] }
+        javascript.gsub(/(\\|<\/|\r\n|\342\200\250|[\n\r"'])/u) { |match| js_escape_map[match] }
       else
         ''
       end

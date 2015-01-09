@@ -23,7 +23,8 @@
             <%= "<h4><strong>Composer:</strong> #{s.composer}" unless s.composer.empty? %>
             <h4><%= s.album %><%= " — #{s.year}" if s.year %><%= ", #{s.genre}" unless s.genre.empty? %> </h4>
 
-            <h6><%= Time.at(s.length).strftime("%M:%S") %>, played <%= s.playCount %> times through this machine</h6> <!-- maybe -->
+            <h6><%= Time.at(s.length).strftime("%M:%S") %>, played <%= s.playCount %> times through this
+              machine</h6> <!-- maybe -->
             <% if s.urlApple!='' %>
                 </div>
                 <div class="col-md-1">

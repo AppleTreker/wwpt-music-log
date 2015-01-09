@@ -31,7 +31,9 @@
 
               <h6><%= Time.at(_song.length).strftime("%M:%S") %>, played <%= _song.playCount %> times through this
                 machine</h6> <!-- Maybe -->
-              <% if _song.urlApple !='' %><a href="<%= _song.urlApple %>" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.svg);}"></a><% end %>
+              <% if _song.urlApple !='' %>
+                  <a href="<%= _song.urlApple %>" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>
+              <% end %>
             </div>
           </div>
         </td>
